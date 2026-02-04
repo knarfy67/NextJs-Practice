@@ -1,4 +1,4 @@
-import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, PlusIcon, TrashIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { deleteInvoice } from '@/app/lib/actions';
 import Link from 'next/link';
 
@@ -37,3 +37,16 @@ export function DeleteInvoice({ id }: { id: string }) {
     </form>
   );
 }
+
+export function ViewDetails({ id }: { id: string }) {
+  return (
+    <Link
+      href={`/dashboard/invoices/view/${id}`}
+      
+    >
+      <ArrowRightIcon className="w-6" />
+    </Link>
+  );
+}
+
+

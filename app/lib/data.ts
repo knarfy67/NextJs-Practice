@@ -222,7 +222,8 @@ export async function fetchFilteredCustomers(query: string) {
 
 
 
-export async function fetchCustomersAll(query: string) {
+export async function fetchCustomersAll(query: string,
+) {
   try {
     const customers = await sql<CustomerField[]>`
       SELECT
