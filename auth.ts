@@ -6,6 +6,11 @@ import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
 import postgres from 'postgres';
  
+
+if (!process.env.AUTH_SECRET) {
+  throw new Error('AUTH_SECRET is missing at runtime');
+}
+
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
  
 async function getUser(email: string): Promise<User | undefined> {
@@ -33,16 +38,8 @@ export const { auth, signIn, signOut } = NextAuth({
           const user = await getUser(email);
           if (!user) return null;
           const passwordsMatch = await bcrypt.compare(password, user.password);
-          console.log(
-  'AUTH_SECRET on server:',
-  process.env.AUTH_SECRET ? '✅ exists' : '❌ missing'
-);
 
           if (passwordsMatch) return user;
-          console.log(
-  'AUTH_SECRET on server:',
-  process.env.AUTH_SECRET ? '✅ exists' : '❌ missing'
-);
         }
  
         return null;
