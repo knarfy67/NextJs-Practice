@@ -2,6 +2,7 @@ import postgres from 'postgres';
 import {
   CustomerField,
   CustomersTableType,
+  Invoice,
   InvoiceForm,
   InvoicesTable,
   LatestInvoiceRaw,
@@ -216,3 +217,25 @@ export async function fetchFilteredCustomers(query: string) {
     throw new Error('Failed to fetch customer table.');
   }
 }
+
+
+
+export async function fetchAllInvoices(query: string) {
+  const invoices: InvoicesTable[] = [];
+  let page = 1;
+  let hasMore = true;
+
+  while (hasMore) {
+    const pageInvoices = await fetchFilteredInvoices(query, page);
+    if (pageInvoices.length === 0) {
+      hasMore = false;
+    } else {
+      invoices.push(...pageInvoices);
+      page++;
+    }
+  }
+
+  return invoices;
+}
+
+
