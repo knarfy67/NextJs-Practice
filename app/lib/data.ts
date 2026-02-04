@@ -3,6 +3,7 @@ import {
   CustomerField,
   CustomersTableType,
   Invoice,
+  Customer,
   InvoiceForm,
   InvoicesTable,
   LatestInvoiceRaw,
@@ -220,22 +221,25 @@ export async function fetchFilteredCustomers(query: string) {
 
 
 
-export async function fetchAllInvoices(query: string) {
-  const invoices: InvoicesTable[] = [];
-  let page = 1;
-  let hasMore = true;
 
-  while (hasMore) {
-    const pageInvoices = await fetchFilteredInvoices(query, page);
-    if (pageInvoices.length === 0) {
-      hasMore = false;
-    } else {
-      invoices.push(...pageInvoices);
-      page++;
-    }
+export async function fetchCustomersAll(query: string) {
+  try {
+    const customers = await sql<CustomerField[]>`
+      SELECT
+        id,
+        name,
+        email,
+        image_url
+      FROM customers
+      ORDER BY name ASC
+    `;
+
+    return customers;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all customers.');
   }
-
-  return invoices;
 }
+
 
 

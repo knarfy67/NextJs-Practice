@@ -1,6 +1,10 @@
 // This file contains type definitions for your data.
 // It describes the shape of the data, and what data type each property should accept.
 // For simplicity of teaching, we're manually defining these types.
+
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import { ReactNode } from "react";
+
 // However, these types are generated automatically if you're using an ORM such as Prisma.
 export type User = {
   id: string;
@@ -8,6 +12,15 @@ export type User = {
   email: string;
   password: string;
 };
+
+
+export type CustomerFieldAll = {
+  id: string;
+  name: string;
+  email: string;
+  image_url: string;
+};
+
 
 export type Customer = {
   id: string;
@@ -76,6 +89,8 @@ export type FormattedCustomersTable = {
 };
 
 export type CustomerField = {
+  email: ReactNode;
+  image_url: string | StaticImport;
   id: string;
   name: string;
 };

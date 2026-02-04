@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
 import InvoiceStatus from '@/app/ui/invoices/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import { fetchAllInvoices, fetchFilteredInvoices } from '@/app/lib/data';
+import { fetchCustomersAll, fetchFilteredInvoices } from '@/app/lib/data';
 
 export async function InvoicesTable({
   query,
@@ -124,7 +124,7 @@ export async function InvoicesTable({
 }
 
 export async function InvoicesTableAll({ query }: { query: string }) {
-  const invoices = await fetchAllInvoices(query);
+  const invoices = await fetchCustomersAll(query);
 
   return (
     <div className="mt-6">
@@ -150,9 +150,9 @@ export async function InvoicesTableAll({ query }: { query: string }) {
                     </div>
                     <p className="text-sm text-gray-500">{invoice.email}</p>
                   </div>
-                  <InvoiceStatus status={invoice.status} />
+                  {/* <InvoiceStatus status={invoice.status} /> */}
                 </div>
-                <div className="flex w-full items-center justify-between pt-4">
+                {/* <div className="flex w-full items-center justify-between pt-4">
                   <div>
                     <p className="text-xl font-medium">
                       {formatCurrency(invoice.amount)}
@@ -163,7 +163,7 @@ export async function InvoicesTableAll({ query }: { query: string }) {
                     <UpdateInvoice id={invoice.id} />
                     <DeleteInvoice id={invoice.id} />
                   </div>
-                </div>
+                </div> */}
               </div>
             ))}
           </div>
@@ -176,7 +176,7 @@ export async function InvoicesTableAll({ query }: { query: string }) {
                 <th scope="col" className="px-3 py-5 font-medium">
                   Email
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                {/* <th scope="col" className="px-3 py-5 font-medium">
                   Amount
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
@@ -184,7 +184,7 @@ export async function InvoicesTableAll({ query }: { query: string }) {
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Status
-                </th>
+                </th> */}
                 {/* <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
                 </th> */}
@@ -211,7 +211,7 @@ export async function InvoicesTableAll({ query }: { query: string }) {
                   <td className="whitespace-nowrap px-3 py-3">
                     {invoice.email}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+                  {/* <td className="whitespace-nowrap px-3 py-3">
                     {formatCurrency(invoice.amount)}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
@@ -219,7 +219,7 @@ export async function InvoicesTableAll({ query }: { query: string }) {
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     <InvoiceStatus status={invoice.status} />
-                  </td>
+                  </td> */}
                   {/* <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
                       <UpdateInvoice id={invoice.id} />
