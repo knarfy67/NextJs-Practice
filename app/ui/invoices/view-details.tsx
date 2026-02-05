@@ -1,16 +1,9 @@
-'use client';
+"use client";
 
-import { CustomerField, InvoiceForm } from '@/app/lib/definitions';
-import {
-  CheckIcon,
-  ClockIcon,
-  CurrencyDollarIcon,
-  UserCircleIcon,
-} from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import { Button } from '@/app/ui/button';
-import { updateInvoice, State } from '@/app/lib/actions';
-import { useActionState } from 'react';
+import { CustomerField, InvoiceForm } from "@/app/lib/definitions";
+import { CheckIcon, ClockIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function ViewInvoiceDetails({
   invoice,
@@ -19,114 +12,66 @@ export default function ViewInvoiceDetails({
   invoice: InvoiceForm;
   customers: CustomerField[];
 }) {
-  
-   const initialState: State = { message: null, errors: {} };
-  const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
-  const [state, formAction] = useActionState(updateInvoiceWithId, initialState);
- 
-  
-  
+  const customer = customers.find((c) => c.id === invoice.customer_id);
+
   return (
-    <form action={formAction}>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Customer Name */}
-        <div className="mb-4">
-          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
-            Customer details
-          </label>
-          <div className="relative">
-            <select
-              id="customer"
-              name="customerId"
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue={invoice.customer_id}
-            >
-              <option value="" disabled>
-                Select a customer
-              </option>
-              {customers.map((customer) => (
-                <option key={customer.id} value={customer.id}>
-                  {customer.name}
-                </option>
-              ))}
-            </select>
-            <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+    <div className="max-w-xl mx-auto overflow-hidden rounded-2xl bg-white shadow-lg">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-indigo-500 to-purple-500 h-32" />
+
+      <div className="p-6 space-y-6">
+        {/* Customer */}
+        <div className="flex items-center gap-4 -mt-14">
+          {/* Customer Image */}
+          {customer?.image_url && (
+            <Image
+              src={customer.image_url}
+              alt={customer.name}
+              width={80}
+              height={80}
+              className="rounded-full border-4 border-white object-cover"
+            />
+          )}
+
+          <div className="mt-6">
+            <p className="text-sm text-gray-500">Customer</p>
+            <p className="text-xl font-semibold">
+              {customer?.name || "Unknown"}
+            </p>
           </div>
         </div>
 
-        {/* Invoice Amount */}
-        <div className="mb-4">
-          <label htmlFor="amount" className="mb-2 block text-sm font-medium">
-            Choose an amount
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <div className="relative">
-              <input
-                id="amount"
-                name="amount"
-                type="number"
-                step="0.01"
-                defaultValue={invoice.amount}
-                placeholder="Enter USD amount"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              />
-              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-            </div>
-          </div>
+        {/* Amount */}
+        <div className="rounded-xl bg-gray-50 p-4">
+          <p className="text-sm text-gray-500">Invoice Amount</p>
+          <p className="text-2xl font-bold">${invoice.amount}</p>
         </div>
 
-        {/* Invoice Status */}
-        <fieldset>
-          <legend className="mb-2 block text-sm font-medium">
-            Set the invoice status
-          </legend>
-          <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
-            <div className="flex gap-4">
-              <div className="flex items-center">
-                <input
-                  id="pending"
-                  name="status"
-                  type="radio"
-                  value="pending"
-                  defaultChecked={invoice.status === 'pending'}
-                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                />
-                <label
-                  htmlFor="pending"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600"
-                >
-                  Pending <ClockIcon className="h-4 w-4" />
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="paid"
-                  name="status"
-                  type="radio"
-                  value="paid"
-                  defaultChecked={invoice.status === 'paid'}
-                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                />
-                <label
-                  htmlFor="paid"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-white"
-                >
-                  Paid <CheckIcon className="h-4 w-4" />
-                </label>
-              </div>
-            </div>
-          </div>
-        </fieldset>
+        {/* Status */}
+        <div>
+          <p className="text-sm text-gray-500 mb-2">Status</p>
+
+          {invoice.status === "pending" ? (
+            <span className="inline-flex items-center gap-1 rounded-full bg-yellow-100 px-4 py-1 text-sm text-yellow-700">
+              Pending <ClockIcon className="h-4 w-4" />
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1 rounded-full bg-green-500 px-4 py-1 text-sm text-white">
+              Paid <CheckIcon className="h-4 w-4" />
+            </span>
+          )}
+        </div>
+
+        {/* Back */}
+        <div className="pt-4 flex justify-end">
+          <Link
+            href="/dashboard/invoices"
+            className="rounded-lg bg-gray-100 px-5 py-2 text-sm font-medium text-gray-600 hover:bg-gray-200"
+          >
+            ← Back to Invoices
+          </Link>
+        </div>
       </div>
-      <div className="mt-6 flex justify-end gap-4">
-        <Link
-          href="/dashboard/invoices"
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
-        >
-          Cancel
-        </Link>
-        <Button type="submit">Edit Invoice</Button>
-      </div>
-    </form>
+    </div>
   );
 }

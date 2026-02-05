@@ -1,12 +1,14 @@
-
-import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice, ViewDetails } from '@/app/ui/invoices/buttons';
-import InvoiceStatus from '@/app/ui/invoices/status';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import { fetchCustomersAll, fetchFilteredInvoices } from '@/app/lib/data';
-import Link from 'next/link';
-
-
+import Image from "next/image";
+import {
+  UpdateInvoice,
+  DeleteInvoice,
+  ViewDetails,
+  ViewCustomerDetails,
+} from "@/app/ui/invoices/buttons";
+import InvoiceStatus from "@/app/ui/invoices/status";
+import { formatDateToLocal, formatCurrency } from "@/app/lib/utils";
+import { fetchCustomersAll, fetchFilteredInvoices } from "@/app/lib/data";
+import Link from "next/link";
 
 export async function InvoicesTable({
   query,
@@ -24,7 +26,6 @@ export async function InvoicesTable({
           <div className="md:hidden">
             {invoices?.map((invoice) => (
               <div
-                
                 key={invoice.id}
                 className="hover:bg-sky-50 mb-2 w-full rounded-md bg-white p-4"
               >
@@ -132,7 +133,7 @@ export async function InvoicesTable({
 export async function InvoicesTableAll({ query }: { query: string }) {
   const invoices = await fetchCustomersAll(query);
   return (
-    <div  className="mt-6">
+    <div className="mt-6">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
@@ -141,7 +142,6 @@ export async function InvoicesTableAll({ query }: { query: string }) {
                 key={invoice.id}
                 className="hover:bg-sky-50 mb-6 w-full rounded-md bg-white p-4  "
               >
-               
                 <div className="flex items-center justify-between border-b pb-4 ">
                   <div>
                     <div className="mb-2 flex items-center">
@@ -156,14 +156,14 @@ export async function InvoicesTableAll({ query }: { query: string }) {
                     </div>
                     <p className="text-sm text-gray-500">{invoice.email}</p>
                   </div>
-                   <div className="flex justify-end gap-3">
-                      <ViewDetails id={invoice.id} />
-                    </div>
+                  <div className="flex justify-end gap-3">
+                    <ViewDetails id={invoice.id} />
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-      
+
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
@@ -196,9 +196,9 @@ export async function InvoicesTableAll({ query }: { query: string }) {
                   <td className="whitespace-nowrap px-3 py-3">
                     {invoice.email}
                   </td>
-                   <td className="whitespace-nowrap px-3 py-3">
-                      <ViewDetails id={invoice.id} />
-                    </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    <ViewCustomerDetails id={invoice.id} name={invoice.name} />
+                  </td>
                 </tr>
               ))}
             </tbody>
