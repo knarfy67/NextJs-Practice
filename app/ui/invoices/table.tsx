@@ -196,7 +196,7 @@ export async function InvoicesTableAll({ query }: { query: string }) {
                   <td className="whitespace-nowrap px-3 py-3">
                     {invoice.email}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+                  <td className="">
                     <ViewCustomerDetails id={invoice.id} name={invoice.name} />
                   </td>
                 </tr>

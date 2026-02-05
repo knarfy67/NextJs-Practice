@@ -64,7 +64,10 @@ export function ViewCustomerDetails({
         query: { name },
       }}
     >
-      <ArrowRightIcon className="w-6" />
+      <div className="flex flex-row p-2 border-2 items-center justify-center gap-2 hover:bg-sky-200">
+        <p>View details</p>
+        <ArrowRightIcon className="w-4" />
+      </div>
     </Link>
   );
 }
