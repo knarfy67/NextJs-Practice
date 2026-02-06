@@ -87,8 +87,8 @@ export type FormattedCustomersTable = {
 };
 
 export type CustomerField = {
-  email: ReactNode;
-  image_url: string | StaticImport;
+  email: string;
+  image_url: string;
   id: string;
   name: string;
 };
