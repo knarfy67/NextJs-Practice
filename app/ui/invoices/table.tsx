@@ -157,7 +157,12 @@ export async function InvoicesTableAll({ query }: { query: string }) {
                     <p className="text-sm text-gray-500">{invoice.email}</p>
                   </div>
                   <div className="flex justify-end gap-3">
-                    <ViewDetails id={invoice.id} />
+                    <ViewCustomerDetails
+                      id={invoice.id}
+                      name={invoice.name}
+                      image_url={invoice.image_url}
+                      email={invoice.email}
+                    />
                   </div>
                 </div>
               </div>
@@ -197,7 +202,12 @@ export async function InvoicesTableAll({ query }: { query: string }) {
                     {invoice.email}
                   </td>
                   <td className="">
-                    <ViewCustomerDetails id={invoice.id} name={invoice.name} />
+                    <ViewCustomerDetails
+                      id={invoice.id}
+                      name={invoice.name}
+                      image_url={invoice.image_url}
+                      email={invoice.email}
+                    />
                   </td>
                 </tr>
               ))}

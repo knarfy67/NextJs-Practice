@@ -1,3 +1,5 @@
+"use client";
+
 import {
   PencilIcon,
   PlusIcon,
@@ -6,6 +8,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { deleteInvoice } from "@/app/lib/actions";
 import Link from "next/link";
+import ModalPage from "../customers/modals/customer-modals";
+import { useState } from "react";
+import { useCustomerStore } from "@/store/customer-store";
 
 export function CreateInvoice() {
   return (
@@ -53,18 +58,31 @@ export function ViewDetails({ id }: { id: string }) {
 export function ViewCustomerDetails({
   id,
   name,
+  image_url,
+  email,
 }: {
   id: string;
   name: string;
+  image_url: string;
+  email: string;
 }) {
+  const setCustomer = useCustomerStore((state) => state.setCustomer);
   return (
     <Link
       href={{
-        pathname: `/dashboard/customers/${id}`,
-        query: { name },
+        pathname: "/dashboard/customers",
+        query: { id, name },
       }}
+      scroll={false}
+      onClick={() =>
+        setCustomer({
+          name,
+          email,
+          img_url: image_url,
+        })
+      }
     >
-      <div className="flex flex-row p-2 border-2 items-center justify-center gap-2 hover:bg-sky-200">
+      <div className="flex flex-row p-2 border-2 items-center justify-between gap-2 hover:bg-sky-200 cursor-pointer">
         <p>View details</p>
         <ArrowRightIcon className="w-4" />
       </div>
