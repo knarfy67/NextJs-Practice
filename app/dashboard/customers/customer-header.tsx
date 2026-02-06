@@ -1,15 +1,33 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useCustomerStore } from "@/store/customer-store";
 
 export default function CustomerHeaderModal() {
+  const searchParams = useSearchParams();
   const router = useRouter();
 
   const customer = useCustomerStore((state) => state.customer);
   const clearCustomer = useCustomerStore((state) => state.clearCustomer);
+
+  const id = searchParams.get("id");
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!id) {
+      clearCustomer();
+    }
+  }, [id, clearCustomer]);
+
+  if (!mounted) return null;
 
   if (!customer) return null;
 
@@ -21,7 +39,6 @@ export default function CustomerHeaderModal() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       <div className="bg-white w-full max-w-md rounded-xl p-5 shadow-xl relative">
-        {/* ❌ Close */}
         <button
           onClick={handleClose}
           className="absolute top-3 right-3 text-gray-500 hover:text-black"
