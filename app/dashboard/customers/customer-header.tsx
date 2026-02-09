@@ -63,10 +63,18 @@ export default function CustomerHeaderModal() {
         </button>
 
         {!showMismatch ? (
-          <div className="flex items-center justify-center py-10">
-            <p className="font-semibold text-lg animate-pulse">Loading...</p>
-          </div>
-        ) : isMismatch ? (
+  <div className="flex items-center gap-3 mb-4 p-3 rounded-lg bg-gray-50 animate-pulse">
+    {/* Avatar skeleton */}
+    <div className="h-[60px] w-[60px] rounded-full bg-gray-300" />
+
+    {/* Text skeleton */}
+    <div className="flex-1 space-y-2">
+      <div className="h-4 w-3/4 rounded bg-gray-300" />
+      <div className="h-3 w-1/2 rounded bg-gray-200" />
+    </div>
+  </div>
+)
+ : isMismatch ? (
           <div className="flex items-center justify-center py-10">
             <p className="font-semibold text-lg">
               Customer details not found
