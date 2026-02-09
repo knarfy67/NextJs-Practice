@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type Customer = {
+  id: string;
   name: string;
   email: string;
   img_url?: string;

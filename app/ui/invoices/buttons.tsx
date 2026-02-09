@@ -11,6 +11,8 @@ import Link from "next/link";
 import ModalPage from "../customers/modals/customer-modals";
 import { useState } from "react";
 import { useCustomerStore } from "@/store/customer-store";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 export function CreateInvoice() {
   return (
@@ -67,6 +69,7 @@ export function ViewCustomerDetails({
   email: string;
 }) {
   const setCustomer = useCustomerStore((state) => state.setCustomer);
+  
   return (
     <Link
       href={{
@@ -76,6 +79,7 @@ export function ViewCustomerDetails({
       scroll={false}
       onClick={() =>
         setCustomer({
+          id,
           name,
           email,
           img_url: image_url,
